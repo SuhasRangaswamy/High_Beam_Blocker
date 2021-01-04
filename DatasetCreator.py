@@ -27,8 +27,7 @@ class datasetCreator:
                 print(im_name, " ", count)
                 self.imageList.append(im_name)
 
-                resized = imutils.resize(im, width=400)
-                ratio = im.shape[0] / float(resized.shape[0])
+                resized = cv2.resize(im, (512, 512), interpolation=cv2.INTER_NEAREST)
 
                 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
                 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -66,16 +65,15 @@ class datasetCreator:
 
                 self.truthDataset.append(mask.tolist())
                 count += 1
-        self.dataset["dataset"] = self.truthDataset
-        self.dataset["imageList"] = self.imageList
+        self.dataset = {'dataset': self.truthDataset, 'imageList': self.imageList}
 
     def exportDataset(self):
         with open(self.outputFilePath + "/truth.json", 'w+') as f:
-            json.dump(self.truthDataset, f)
+            json.dump(self.dataset, f)
 
 if __name__=="__main__":
     input = "../datasets/HighBB/Images"
     outputFile = "../datasets/HighBB"
     datasetCtr = datasetCreator(input, outputFile)
-    datasetCtr.load_images(3000)
+    datasetCtr.load_images(1)
     datasetCtr.exportDataset()
