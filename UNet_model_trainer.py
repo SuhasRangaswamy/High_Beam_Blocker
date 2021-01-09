@@ -1,4 +1,8 @@
 import tensorflow as tf
+
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
+
 #import tensorflow_datasets as tfds
 from DataProcessing import DP
 import matplotlib.pyplot as plt
@@ -9,8 +13,8 @@ import os
 from tensorflow.python.client import device_lib
 print(device_lib.list_local_devices())
 
-inputImagesPath = "../datasets/HighBB/Images"
-truthPath = "../datasets/HighBB/truth.json"
+inputImagesPath = "../datasets/Images"
+truthPath = "../datasets/truth.json"
 TrainedModelDir = "../TrainedModels/HBB"
 ModelName = "Unet_HBB"
 

@@ -43,7 +43,7 @@ class datasetCreator:
                 # perform a connected component analysis on the thresholded
                 # image; then initialize a mask to store only the "large"
                 # components
-                labels = measure.label(thresh, neighbors=8, background=0)
+                labels = measure.label(thresh, background=0)
                 mask = np.zeros(thresh.shape, dtype="uint8")
 
                 # loop over the unique components
@@ -72,8 +72,8 @@ class datasetCreator:
             json.dump(self.dataset, f)
 
 if __name__=="__main__":
-    input = "../datasets/HighBB/Images"
-    outputFile = "../datasets/HighBB"
+    input = "../datasets/Images"
+    outputFile = "../datasets/"
     datasetCtr = datasetCreator(input, outputFile)
-    datasetCtr.load_images(1)
+    datasetCtr.load_images(100)
     datasetCtr.exportDataset()

@@ -5,7 +5,7 @@ import imutils
 from skimage import measure
 
 inputPath = 'Ramurthynagar.MP4'
-outPath = './Images_masks'
+outPath = '../datasets/Images'
 
 def extractImages(inPath, outputPath):
     '''
@@ -21,9 +21,10 @@ def extractImages(inPath, outputPath):
     while success:
         cap.set(cv2.CAP_PROP_POS_MSEC, (count*100))
         success, image = cap.read()
-        if success and count < 2:
+        if success:
             print('Reading a new frame: ', success)
             print('frame%d' % count)
+            '''
             resized = imutils.resize(image, width=300)
             ratio = image.shape[0] / float(resized.shape[0])
 
@@ -60,7 +61,8 @@ def extractImages(inPath, outputPath):
                 # large, then add it to our mask of "large blobs"
                 if numPixels > 40:
                     mask = cv2.add(mask, labelMask)
-
+            '''
+            cv2.imwrite(outputPath + "/frame%d.jpg" %count, image)
             #cv2.imwrite(outputPath + "/frame%d.jpg" % count, mask)
             count += 1
 
